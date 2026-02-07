@@ -1,0 +1,7 @@
+# robots.txt for aminebouhlal.com
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://portfolio-seven-mu-54.vercel.app/sitemap.xml
