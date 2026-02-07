@@ -32,9 +32,17 @@ function App() {
   const closeMobileMenu = () => setMobileMenuOpen(false)
 
   return (
-    <main className="bg-dark-900 min-h-screen">
+    <div className="bg-dark-900 min-h-screen">
+      {/* Skip to content link for keyboard users */}
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-accent focus:text-white focus:rounded-lg focus:outline-none"
+      >
+        Skip to content
+      </a>
+
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4">
+      <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4" aria-label="Main navigation">
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           <a href="#" className="text-xl font-bold gradient-text">AB</a>
           
@@ -79,21 +87,24 @@ function App() {
         </div>
       </nav>
 
-      {/* Hero with 3D Avatar */}
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-60">
-          <Suspense fallback={<Avatar3DFallback />}>
-            <Avatar3D />
-          </Suspense>
+      {/* Main Content */}
+      <main id="main-content">
+        {/* Hero with 3D Avatar */}
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-60" aria-hidden="true">
+            <Suspense fallback={<Avatar3DFallback />}>
+              <Avatar3D />
+            </Suspense>
+          </div>
+          <Hero />
         </div>
-        <Hero />
-      </div>
 
-      {/* Sections */}
-      <About />
-      <Projects />
-      <Contact />
-    </main>
+        {/* Sections */}
+        <About />
+        <Projects />
+        <Contact />
+      </main>
+    </div>
   )
 }
 
