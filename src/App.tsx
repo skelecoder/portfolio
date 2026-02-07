@@ -1,9 +1,10 @@
 import { lazy, Suspense, useState } from 'react'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Gamepad2 } from 'lucide-react'
 import { Hero, About, Projects, Contact } from './components/Sections'
 
-// Lazy load Avatar3D to reduce initial bundle (Three.js is ~1MB)
+// Lazy load heavy components
 const Avatar3D = lazy(() => import('./components/Avatar3D').then(m => ({ default: m.Avatar3D })))
+const PadelGame = lazy(() => import('./components/PadelGame').then(m => ({ default: m.PadelGame })))
 
 // Loading fallback with animated gradient sphere placeholder
 function Avatar3DFallback() {
@@ -28,11 +29,35 @@ const navLinks = [
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [showGame, setShowGame] = useState(false)
 
   const closeMobileMenu = () => setMobileMenuOpen(false)
 
   return (
     <div className="bg-dark-900 min-h-screen">
+      {/* Padel Game Easter Egg */}
+      {showGame && (
+        <Suspense fallback={
+          <div className="fixed inset-0 z-50 bg-dark-900/95 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-full border-2 border-accent border-t-transparent animate-spin" />
+          </div>
+        }>
+          <PadelGame onClose={() => setShowGame(false)} />
+        </Suspense>
+      )}
+
+      {/* Game Launch Button - Fixed */}
+      <button
+        onClick={() => setShowGame(true)}
+        className="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full glass flex items-center justify-center text-white/40 hover:text-accent hover:bg-accent/10 hover:scale-110 transition-all group"
+        aria-label="Play Padel Breaker game"
+        title="🎮 Play Padel Breaker"
+      >
+        <Gamepad2 size={20} />
+        <span className="absolute right-full mr-3 px-3 py-1.5 rounded-lg bg-dark-800 text-xs text-white/80 font-medium opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+          Play Padel Breaker
+        </span>
+      </button>
       {/* Skip to content link for keyboard users */}
       <a 
         href="#main-content" 
