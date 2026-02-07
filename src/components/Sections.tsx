@@ -1,58 +1,161 @@
 import { Github, Linkedin, Twitter, Mail, ExternalLink, Code2, Rocket, Brain } from 'lucide-react'
+import { useInView } from '../hooks/useInView'
+
+// Reusable animated wrapper component
+function FadeIn({ 
+  children, 
+  delay = 0,
+  className = '',
+  direction = 'up'
+}: { 
+  children: React.ReactNode
+  delay?: number
+  className?: string
+  direction?: 'up' | 'down' | 'left' | 'right'
+}) {
+  const { ref, isInView } = useInView({ threshold: 0.1 })
+  
+  const transforms = {
+    up: 'translate-y-8',
+    down: '-translate-y-8',
+    left: 'translate-x-8',
+    right: '-translate-x-8',
+  }
+
+  return (
+    <div
+      ref={ref}
+      className={`transition-all duration-700 ease-out ${className}`}
+      style={{ 
+        transitionDelay: `${delay}ms`,
+        opacity: isInView ? 1 : 0,
+        transform: isInView ? 'translate(0, 0)' : undefined,
+      }}
+      // Apply initial transform via className when not in view
+      data-visible={isInView}
+    >
+      <div className={`transition-transform duration-700 ease-out ${!isInView ? transforms[direction] : ''}`}
+           style={{ transitionDelay: `${delay}ms` }}>
+        {children}
+      </div>
+    </div>
+  )
+}
+
+// Animated glow line with shimmer effect
+function GlowLine() {
+  const { ref, isInView } = useInView({ threshold: 0.5 })
+  
+  return (
+    <div ref={ref} className="relative h-px mb-16 overflow-hidden">
+      <div 
+        className={`absolute inset-0 bg-gradient-to-r from-transparent via-accent to-transparent transition-all duration-1000 ${
+          isInView ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0'
+        }`}
+      />
+      {/* Shimmer effect */}
+      <div 
+        className={`absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent transition-opacity duration-500 ${
+          isInView ? 'animate-shimmer' : 'opacity-0'
+        }`}
+        style={{ 
+          backgroundSize: '200% 100%',
+          animation: isInView ? 'shimmer 2s ease-in-out infinite' : 'none'
+        }}
+      />
+    </div>
+  )
+}
 
 export function Hero() {
+  const { ref, isInView } = useInView({ threshold: 0.3 })
+
   return (
-    <section className="min-h-screen flex flex-col justify-center items-center relative px-6">
+    <section ref={ref} className="min-h-screen flex flex-col justify-center items-center relative px-6">
       <div className="absolute inset-0 bg-gradient-to-b from-accent/5 via-transparent to-transparent" />
       
       <div className="text-center z-10 max-w-4xl">
-        <p className="text-accent font-mono text-sm md:text-base mb-4 tracking-widest uppercase">
+        <p 
+          className={`text-accent font-mono text-sm md:text-base mb-4 tracking-widest uppercase transition-all duration-700 ${
+            isInView ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
+          }`}
+        >
           Tech Entrepreneur · AI Engineer · Surfer
         </p>
         
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
+        <h1 
+          className={`text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight transition-all duration-700 delay-150 ${
+            isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+          }`}
+        >
           Amine<br />
-          <span className="gradient-text">Bouhlal</span>
+          <span className="gradient-text inline-block hover:scale-105 transition-transform cursor-default">
+            Bouhlal
+          </span>
         </h1>
         
-        <p className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-8 leading-relaxed">
+        <p 
+          className={`text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-8 leading-relaxed transition-all duration-700 delay-300 ${
+            isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+          }`}
+        >
           Building the future of padel in Morocco with AI-driven solutions.
           Passionate about automation, agents, and turning complex problems into elegant products.
         </p>
         
-        <div className="flex gap-4 justify-center mb-12">
-          <a href="#projects" className="px-8 py-3 bg-accent hover:bg-accent-light transition-colors rounded-full font-medium">
-            View Work
+        <div 
+          className={`flex gap-4 justify-center mb-12 transition-all duration-700 delay-500 ${
+            isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+          }`}
+        >
+          <a 
+            href="#projects" 
+            className="group px-8 py-3 bg-accent hover:bg-accent-light transition-all rounded-full font-medium relative overflow-hidden"
+          >
+            <span className="relative z-10">View Work</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-accent-light to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
           </a>
-          <a href="#contact" className="px-8 py-3 border border-white/20 hover:border-white/40 transition-colors rounded-full font-medium">
+          <a 
+            href="#contact" 
+            className="px-8 py-3 border border-white/20 hover:border-accent hover:text-accent transition-all rounded-full font-medium"
+          >
             Get in Touch
           </a>
         </div>
         
-        <div className="flex gap-6 justify-center">
-          <SocialLink href="https://github.com/skelecoder" icon={<Github size={20} />} />
-          <SocialLink href="https://linkedin.com/in/aminebouhlal" icon={<Linkedin size={20} />} />
-          <SocialLink href="https://twitter.com/skelecoder" icon={<Twitter size={20} />} />
-          <SocialLink href="mailto:amine@x3.ma" icon={<Mail size={20} />} />
+        <div 
+          className={`flex gap-6 justify-center transition-all duration-700 delay-700 ${
+            isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+          }`}
+        >
+          <SocialLink href="https://github.com/skelecoder" icon={<Github size={20} />} label="GitHub" />
+          <SocialLink href="https://linkedin.com/in/aminebouhlal" icon={<Linkedin size={20} />} label="LinkedIn" />
+          <SocialLink href="https://twitter.com/skelecoder" icon={<Twitter size={20} />} label="Twitter" />
+          <SocialLink href="mailto:amine@x3.ma" icon={<Mail size={20} />} label="Email" />
         </div>
       </div>
       
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
-          <div className="w-1.5 h-3 bg-white/50 rounded-full" />
+      <div 
+        className={`absolute bottom-8 left-1/2 -translate-x-1/2 transition-all duration-1000 delay-1000 ${
+          isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+        }`}
+      >
+        <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2 hover:border-accent transition-colors cursor-pointer">
+          <div className="w-1.5 h-3 bg-white/50 rounded-full animate-bounce" />
         </div>
       </div>
     </section>
   )
 }
 
-function SocialLink({ href, icon }: { href: string; icon: React.ReactNode }) {
+function SocialLink({ href, icon, label }: { href: string; icon: React.ReactNode; label: string }) {
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="w-12 h-12 rounded-full glass flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-all"
+      aria-label={label}
+      className="w-12 h-12 rounded-full glass flex items-center justify-center text-white/60 hover:text-white hover:bg-accent/20 hover:border-accent/50 hover:scale-110 transition-all duration-300"
     >
       {icon}
     </a>
@@ -63,29 +166,41 @@ export function About() {
   return (
     <section id="about" className="py-32 px-6">
       <div className="max-w-4xl mx-auto">
-        <div className="glow-line mb-16" />
+        <GlowLine />
         
-        <h2 className="text-3xl md:text-4xl font-bold mb-12">
-          <span className="text-white/40">01.</span> About
-        </h2>
+        <FadeIn>
+          <h2 className="text-3xl md:text-4xl font-bold mb-12">
+            <span className="text-white/40">01.</span> About
+          </h2>
+        </FadeIn>
         
         <div className="grid md:grid-cols-2 gap-12">
           <div>
-            <p className="text-lg text-white/70 leading-relaxed mb-6">
-              Based in Tangier, Morocco. Former architect turned software engineer.
-              Currently leading AI transformation at NTT Data while building X3 — 
-              the padel platform that will change how Morocco plays.
-            </p>
-            <p className="text-lg text-white/70 leading-relaxed">
-              When I'm not coding, you'll find me catching waves in Imsouane 
-              or exploring new automation possibilities with AI agents.
-            </p>
+            <FadeIn delay={100}>
+              <p className="text-lg text-white/70 leading-relaxed mb-6">
+                Based in Tangier, Morocco. Former architect turned software engineer.
+                Currently leading AI transformation at NTT Data while building X3 — 
+                the padel platform that will change how Morocco plays.
+              </p>
+            </FadeIn>
+            <FadeIn delay={200}>
+              <p className="text-lg text-white/70 leading-relaxed">
+                When I'm not coding, you'll find me catching waves in Imsouane 
+                or exploring new automation possibilities with AI agents.
+              </p>
+            </FadeIn>
           </div>
           
           <div className="space-y-6">
-            <SkillCard icon={<Brain />} title="AI & Automation" desc="Vertex AI, LangChain, n8n, Agent orchestration" />
-            <SkillCard icon={<Code2 />} title="Full Stack" desc="React, Next.js, Node, TypeScript, Supabase" />
-            <SkillCard icon={<Rocket />} title="Cloud & DevOps" desc="GCP, Vercel, Docker, Kubernetes" />
+            <FadeIn delay={150} direction="right">
+              <SkillCard icon={<Brain />} title="AI & Automation" desc="Vertex AI, LangChain, n8n, Agent orchestration" />
+            </FadeIn>
+            <FadeIn delay={250} direction="right">
+              <SkillCard icon={<Code2 />} title="Full Stack" desc="React, Next.js, Node, TypeScript, Supabase" />
+            </FadeIn>
+            <FadeIn delay={350} direction="right">
+              <SkillCard icon={<Rocket />} title="Cloud & DevOps" desc="GCP, Vercel, Docker, Kubernetes" />
+            </FadeIn>
           </div>
         </div>
       </div>
@@ -95,11 +210,11 @@ export function About() {
 
 function SkillCard({ icon, title, desc }: { icon: React.ReactNode; title: string; desc: string }) {
   return (
-    <div className="glass rounded-xl p-6 hover:bg-white/5 transition-colors">
+    <div className="glass rounded-xl p-6 hover:bg-white/5 hover:border-accent/30 hover:scale-[1.02] transition-all duration-300 cursor-default group">
       <div className="flex items-center gap-4">
-        <div className="text-accent">{icon}</div>
+        <div className="text-accent group-hover:scale-110 transition-transform duration-300">{icon}</div>
         <div>
-          <h3 className="font-semibold mb-1">{title}</h3>
+          <h3 className="font-semibold mb-1 group-hover:text-accent transition-colors">{title}</h3>
           <p className="text-sm text-white/50">{desc}</p>
         </div>
       </div>
@@ -132,15 +247,19 @@ export function Projects() {
   return (
     <section id="projects" className="py-32 px-6 bg-dark-800/50">
       <div className="max-w-5xl mx-auto">
-        <div className="glow-line mb-16" />
+        <GlowLine />
         
-        <h2 className="text-3xl md:text-4xl font-bold mb-12">
-          <span className="text-white/40">02.</span> Projects
-        </h2>
+        <FadeIn>
+          <h2 className="text-3xl md:text-4xl font-bold mb-12">
+            <span className="text-white/40">02.</span> Projects
+          </h2>
+        </FadeIn>
         
         <div className="space-y-8">
           {projects.map((project, i) => (
-            <ProjectCard key={i} {...project} />
+            <FadeIn key={i} delay={i * 150}>
+              <ProjectCard {...project} />
+            </FadeIn>
           ))}
         </div>
       </div>
@@ -162,18 +281,23 @@ function ProjectCard({
   featured?: boolean 
 }) {
   return (
-    <div className={`glass rounded-2xl p-8 hover:bg-white/5 transition-all group ${featured ? 'border-accent/20' : ''}`}>
+    <div className={`glass rounded-2xl p-8 hover:bg-white/5 hover:border-accent/20 hover:scale-[1.01] transition-all duration-300 group ${featured ? 'border-accent/20' : ''}`}>
       <div className="flex justify-between items-start mb-4">
         <div>
-          {featured && <span className="text-xs text-accent font-mono mb-2 block">Featured Project</span>}
-          <h3 className="text-2xl font-bold">{title}</h3>
+          {featured && (
+            <span className="text-xs text-accent font-mono mb-2 block animate-pulse">
+              Featured Project
+            </span>
+          )}
+          <h3 className="text-2xl font-bold group-hover:text-accent transition-colors">{title}</h3>
         </div>
         {link && (
           <a 
             href={link} 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-white/40 hover:text-accent transition-colors"
+            className="text-white/40 hover:text-accent hover:scale-110 transition-all p-2"
+            aria-label={`Visit ${title}`}
           >
             <ExternalLink size={20} />
           </a>
@@ -184,7 +308,11 @@ function ProjectCard({
       
       <div className="flex flex-wrap gap-2">
         {tech.map((t, i) => (
-          <span key={i} className="px-3 py-1 text-xs font-mono text-accent/80 bg-accent/10 rounded-full">
+          <span 
+            key={i} 
+            className="px-3 py-1 text-xs font-mono text-accent/80 bg-accent/10 rounded-full hover:bg-accent/20 transition-colors"
+            style={{ animationDelay: `${i * 50}ms` }}
+          >
             {t}
           </span>
         ))}
@@ -197,28 +325,37 @@ export function Contact() {
   return (
     <section id="contact" className="py-32 px-6">
       <div className="max-w-2xl mx-auto text-center">
-        <div className="glow-line mb-16" />
+        <GlowLine />
         
-        <h2 className="text-3xl md:text-4xl font-bold mb-6">
-          <span className="text-white/40">03.</span> Get in Touch
-        </h2>
+        <FadeIn>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            <span className="text-white/40">03.</span> Get in Touch
+          </h2>
+        </FadeIn>
         
-        <p className="text-lg text-white/60 mb-12 leading-relaxed">
-          Whether you want to collaborate on a project, talk about AI, 
-          or just say hi — my inbox is always open.
-        </p>
+        <FadeIn delay={100}>
+          <p className="text-lg text-white/60 mb-12 leading-relaxed">
+            Whether you want to collaborate on a project, talk about AI, 
+            or just say hi — my inbox is always open.
+          </p>
+        </FadeIn>
         
-        <a 
-          href="mailto:amine@x3.ma"
-          className="inline-block px-12 py-4 bg-accent hover:bg-accent-light transition-colors rounded-full font-medium text-lg"
-        >
-          Say Hello
-        </a>
+        <FadeIn delay={200}>
+          <a 
+            href="mailto:amine@x3.ma"
+            className="group inline-block px-12 py-4 bg-accent hover:bg-accent-light transition-all rounded-full font-medium text-lg relative overflow-hidden hover:scale-105 hover:shadow-lg hover:shadow-accent/25"
+          >
+            <span className="relative z-10">Say Hello</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-accent-light via-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          </a>
+        </FadeIn>
         
-        <div className="mt-24 text-white/30 text-sm font-mono">
-          <p>Designed & Built by Amine Bouhlal</p>
-          <p className="mt-2">© 2026</p>
-        </div>
+        <FadeIn delay={400}>
+          <div className="mt-24 text-white/30 text-sm font-mono">
+            <p className="hover:text-white/50 transition-colors">Designed & Built by Amine Bouhlal</p>
+            <p className="mt-2">© 2026</p>
+          </div>
+        </FadeIn>
       </div>
     </section>
   )
