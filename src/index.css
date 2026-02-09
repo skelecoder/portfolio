@@ -18,6 +18,31 @@ body {
   overflow-x: hidden;
 }
 
+/* Subtle animated grid background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridFloat 30s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes gridFloat {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(60px, 60px); }
+}
+
+/* Ensure content stays above grid */
+#root {
+  position: relative;
+  z-index: 1;
+}
+
 ::selection {
   background: rgba(99, 102, 241, 0.3);
   color: #fff;
@@ -123,5 +148,9 @@ button:focus-visible,
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+  
+  body::before {
+    animation: none;
   }
 }
