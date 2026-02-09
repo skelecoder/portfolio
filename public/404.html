@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>404 - Lost in the Matrix | Amine Bouhlal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', system-ui, sans-serif;
+        background: #0a0a0f;
+        color: #ffffff;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        position: relative;
+      }
+
+      /* Animated background grid */
+      .grid-bg {
+        position: absolute;
+        inset: 0;
+        background-image: 
+          linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+        background-size: 50px 50px;
+        animation: gridMove 20s linear infinite;
+      }
+
+      @keyframes gridMove {
+        0% { transform: translate(0, 0); }
+        100% { transform: translate(50px, 50px); }
+      }
+
+      /* Floating orbs */
+      .orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.3;
+        animation: float 8s ease-in-out infinite;
+      }
+
+      .orb-1 {
+        width: 400px;
+        height: 400px;
+        background: #6366f1;
+        top: -100px;
+        left: -100px;
+        animation-delay: 0s;
+      }
+
+      .orb-2 {
+        width: 300px;
+        height: 300px;
+        background: #ec4899;
+        bottom: -50px;
+        right: -50px;
+        animation-delay: -4s;
+      }
+
+      @keyframes float {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        50% { transform: translate(30px, -30px) scale(1.1); }
+      }
+
+      .content {
+        position: relative;
+        z-index: 10;
+        text-align: center;
+        padding: 2rem;
+      }
+
+      /* Glitch effect 404 */
+      .glitch-wrapper {
+        position: relative;
+        display: inline-block;
+      }
+
+      .glitch {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: clamp(6rem, 20vw, 12rem);
+        font-weight: 700;
+        background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        position: relative;
+        animation: glitchText 3s infinite;
+      }
+
+      .glitch::before,
+      .glitch::after {
+        content: '404';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .glitch::before {
+        animation: glitch-1 2s infinite linear alternate-reverse;
+        clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+      }
+
+      .glitch::after {
+        animation: glitch-2 2s infinite linear alternate-reverse;
+        clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+      }
+
+      @keyframes glitch-1 {
+        0%, 100% { transform: translate(0); }
+        20% { transform: translate(-3px, 3px); }
+        40% { transform: translate(-3px, -3px); }
+        60% { transform: translate(3px, 3px); }
+        80% { transform: translate(3px, -3px); }
+      }
+
+      @keyframes glitch-2 {
+        0%, 100% { transform: translate(0); }
+        20% { transform: translate(3px, -3px); }
+        40% { transform: translate(3px, 3px); }
+        60% { transform: translate(-3px, -3px); }
+        80% { transform: translate(-3px, 3px); }
+      }
+
+      @keyframes glitchText {
+        0%, 100% { opacity: 1; }
+        92% { opacity: 1; }
+        93% { opacity: 0.8; }
+        94% { opacity: 1; }
+        95% { opacity: 0.6; }
+        96% { opacity: 1; }
+      }
+
+      .subtitle {
+        font-size: 1.25rem;
+        color: rgba(255, 255, 255, 0.6);
+        margin: 1.5rem 0 0.5rem;
+        font-weight: 400;
+      }
+
+      .message {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.4);
+        margin-bottom: 2.5rem;
+      }
+
+      .message span {
+        color: #6366f1;
+      }
+
+      /* Home button */
+      .home-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.875rem 2rem;
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: #fff;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.95rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .home-btn:hover {
+        background: rgba(99, 102, 241, 0.1);
+        border-color: rgba(99, 102, 241, 0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 40px rgba(99, 102, 241, 0.2);
+      }
+
+      .home-btn svg {
+        transition: transform 0.3s ease;
+      }
+
+      .home-btn:hover svg {
+        transform: translateX(-3px);
+      }
+
+      /* Hint */
+      .hint {
+        position: absolute;
+        bottom: 2rem;
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.2);
+      }
+
+      .hint span {
+        display: inline-block;
+        animation: bounce 2s infinite;
+      }
+
+      @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid-bg"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    
+    <main class="content">
+      <div class="glitch-wrapper">
+        <div class="glitch">404</div>
+      </div>
+      
+      <p class="subtitle">Lost in the matrix</p>
+      <p class="message"><span>$</span> page_not_found <span>--path</span> "???"</p>
+      
+      <a href="/" class="home-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Back to reality
+      </a>
+    </main>
+
+    <p class="hint">
+      <span>↑</span> The page you're looking for doesn't exist
+    </p>
+  </body>
+</html>
