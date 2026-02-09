@@ -2,11 +2,14 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Theme color for mobile browsers -->
+    <meta name="theme-color" content="#0a0a0f" />
+    <meta name="color-scheme" content="dark" />
     <!-- Preconnect to Google Fonts for faster font loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Amine Bouhlal - Tech Entrepreneur, AI Engineer, and Founder of X3. Building the future of padel in Morocco." />
     <meta name="keywords" content="Amine Bouhlal, X3, padel, Morocco, AI, software engineer, NTT Data" />
     <link rel="canonical" href="https://portfolio-seven-mu-54.vercel.app/" />
@@ -16,6 +19,11 @@
     <meta property="og:url" content="https://portfolio-seven-mu-54.vercel.app/" />
     <meta name="twitter:card" content="summary_large_image" />
     <title>Amine Bouhlal — Tech Entrepreneur & AI Engineer</title>
+    <!-- Critical CSS for instant dark background (prevents flash) -->
+    <style>
+      html, body, #root { background: #0a0a0f; min-height: 100vh; }
+      body { margin: 0; color: #fff; font-family: system-ui, sans-serif; }
+    </style>
   </head>
   <body>
     <div id="root"></div>
