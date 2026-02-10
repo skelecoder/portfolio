@@ -48,6 +48,17 @@ body::before {
   color: #fff;
 }
 
+/* Custom cursor */
+@media (pointer: fine) {
+  html {
+    cursor: none;
+  }
+  
+  a, button, [role="button"] {
+    cursor: none;
+  }
+}
+
 ::-webkit-scrollbar {
   width: 8px;
 }

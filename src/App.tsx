@@ -1,6 +1,7 @@
 import { lazy, Suspense, useState } from 'react'
 import { Menu, X, Gamepad2 } from 'lucide-react'
 import { Hero, About, Projects, Contact } from './components/Sections'
+import { Cursor } from './components/Cursor'
 
 // Lazy load heavy components
 const Avatar3D = lazy(() => import('./components/Avatar3D').then(m => ({ default: m.Avatar3D })))
@@ -35,6 +36,9 @@ function App() {
 
   return (
     <div className="bg-dark-900 min-h-screen">
+      {/* Custom cursor */}
+      <Cursor />
+      
       {/* Padel Game Easter Egg */}
       {showGame && (
         <Suspense fallback={
