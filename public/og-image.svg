@@ -1,0 +1,41 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0f"/>
+      <stop offset="100%" style="stop-color:#1a1a2e"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00d9ff"/>
+      <stop offset="100%" style="stop-color:#7b2dff"/>
+    </linearGradient>
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  
+  <!-- Accent line -->
+  <rect x="80" y="200" width="120" height="4" fill="url(#accent)" rx="2"/>
+  
+  <!-- Name -->
+  <text x="80" y="280" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="700" fill="white">
+    Amine Bouhlal
+  </text>
+  
+  <!-- Subtitle -->
+  <text x="80" y="350" font-family="system-ui, -apple-system, sans-serif" font-size="32" fill="rgba(255,255,255,0.7)">
+    Tech Entrepreneur · AI Engineer · Founder of X3
+  </text>
+  
+  <!-- Domain -->
+  <text x="80" y="550" font-family="ui-monospace, monospace" font-size="24" fill="rgba(0,217,255,0.8)">
+    aminebouhlal.com
+  </text>
+  
+  <!-- Decorative elements -->
+  <circle cx="1050" cy="150" r="80" fill="none" stroke="url(#accent)" stroke-width="2" opacity="0.3"/>
+  <circle cx="1080" cy="180" r="120" fill="none" stroke="url(#accent)" stroke-width="1" opacity="0.2"/>
+</svg>
