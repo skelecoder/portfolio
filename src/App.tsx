@@ -1,5 +1,5 @@
 import { lazy, Suspense, useState, useEffect } from 'react'
-import { Menu, X, Gamepad2, Terminal } from 'lucide-react'
+import { Menu, X, Gamepad2, Terminal, Keyboard } from 'lucide-react'
 import { Hero, About, Projects, Contact } from './components/Sections'
 import { Cursor } from './components/Cursor'
 
@@ -7,6 +7,7 @@ import { Cursor } from './components/Cursor'
 const Avatar3D = lazy(() => import('./components/Avatar3D').then(m => ({ default: m.Avatar3D })))
 const PadelGame = lazy(() => import('./components/PadelGame').then(m => ({ default: m.PadelGame })))
 const TerminalView = lazy(() => import('./components/TerminalView').then(m => ({ default: m.TerminalView })))
+const KeyboardHints = lazy(() => import('./components/KeyboardHints').then(m => ({ default: m.KeyboardHints })))
 
 // Loading fallback with animated gradient sphere placeholder
 function Avatar3DFallback() {
@@ -33,16 +34,24 @@ function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [showGame, setShowGame] = useState(false)
   const [showTerminal, setShowTerminal] = useState(false)
+  const [showHints, setShowHints] = useState(false)
 
   const closeMobileMenu = () => setMobileMenuOpen(false)
 
-  // Keyboard shortcut: press 't' to toggle terminal (when not typing)
+  // Keyboard shortcuts
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       // Ignore if user is typing in an input
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return
-      if (e.key === 't' && !e.ctrlKey && !e.metaKey && !e.altKey) {
-        setShowTerminal(prev => !prev)
+      if (e.ctrlKey || e.metaKey || e.altKey) return
+
+      switch (e.key) {
+        case 't':
+          setShowTerminal(prev => !prev)
+          break
+        case '?':
+          setShowHints(prev => !prev)
+          break
       }
     }
     window.addEventListener('keydown', handleKey)
@@ -76,8 +85,28 @@ function App() {
         </Suspense>
       )}
 
+      {/* Keyboard Shortcuts Overlay */}
+      {showHints && (
+        <Suspense fallback={null}>
+          <KeyboardHints onClose={() => setShowHints(false)} />
+        </Suspense>
+      )}
+
       {/* Easter Egg Buttons - Fixed */}
       <div className="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
+        {/* Keyboard Shortcuts Button */}
+        <button
+          onClick={() => setShowHints(true)}
+          className="w-10 h-10 rounded-full glass flex items-center justify-center text-white/30 hover:text-white/60 hover:bg-white/5 hover:scale-110 transition-all group"
+          aria-label="Show keyboard shortcuts"
+          title="⌨️ Keyboard shortcuts (or press ?)"
+        >
+          <Keyboard size={16} />
+          <span className="absolute right-full mr-3 px-3 py-1.5 rounded-lg bg-dark-800 text-xs text-white/80 font-medium opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+            Shortcuts
+          </span>
+        </button>
+
         {/* Terminal Mode Button */}
         <button
           onClick={() => setShowTerminal(true)}
