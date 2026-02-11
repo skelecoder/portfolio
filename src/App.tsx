@@ -1,11 +1,12 @@
-import { lazy, Suspense, useState } from 'react'
-import { Menu, X, Gamepad2 } from 'lucide-react'
+import { lazy, Suspense, useState, useEffect } from 'react'
+import { Menu, X, Gamepad2, Terminal } from 'lucide-react'
 import { Hero, About, Projects, Contact } from './components/Sections'
 import { Cursor } from './components/Cursor'
 
 // Lazy load heavy components
 const Avatar3D = lazy(() => import('./components/Avatar3D').then(m => ({ default: m.Avatar3D })))
 const PadelGame = lazy(() => import('./components/PadelGame').then(m => ({ default: m.PadelGame })))
+const TerminalView = lazy(() => import('./components/TerminalView').then(m => ({ default: m.TerminalView })))
 
 // Loading fallback with animated gradient sphere placeholder
 function Avatar3DFallback() {
@@ -31,8 +32,22 @@ const navLinks = [
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [showGame, setShowGame] = useState(false)
+  const [showTerminal, setShowTerminal] = useState(false)
 
   const closeMobileMenu = () => setMobileMenuOpen(false)
+
+  // Keyboard shortcut: press 't' to toggle terminal (when not typing)
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      // Ignore if user is typing in an input
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return
+      if (e.key === 't' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+        setShowTerminal(prev => !prev)
+      }
+    }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [])
 
   return (
     <div className="bg-dark-900 min-h-screen">
@@ -50,18 +65,45 @@ function App() {
         </Suspense>
       )}
 
-      {/* Game Launch Button - Fixed */}
-      <button
-        onClick={() => setShowGame(true)}
-        className="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full glass flex items-center justify-center text-white/40 hover:text-accent hover:bg-accent/10 hover:scale-110 transition-all group"
-        aria-label="Play Padel Breaker game"
-        title="🎮 Play Padel Breaker"
-      >
-        <Gamepad2 size={20} />
-        <span className="absolute right-full mr-3 px-3 py-1.5 rounded-lg bg-dark-800 text-xs text-white/80 font-medium opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-          Play Padel Breaker
-        </span>
-      </button>
+      {/* Terminal Mode Easter Egg */}
+      {showTerminal && (
+        <Suspense fallback={
+          <div className="fixed inset-0 z-50 bg-black flex items-center justify-center">
+            <div className="w-12 h-12 rounded-full border-2 border-green-400 border-t-transparent animate-spin" />
+          </div>
+        }>
+          <TerminalView onClose={() => setShowTerminal(false)} />
+        </Suspense>
+      )}
+
+      {/* Easter Egg Buttons - Fixed */}
+      <div className="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
+        {/* Terminal Mode Button */}
+        <button
+          onClick={() => setShowTerminal(true)}
+          className="w-12 h-12 rounded-full glass flex items-center justify-center text-white/40 hover:text-green-400 hover:bg-green-400/10 hover:scale-110 transition-all group"
+          aria-label="Open terminal view"
+          title="🖥️ Terminal Mode (or press T)"
+        >
+          <Terminal size={20} />
+          <span className="absolute right-full mr-3 px-3 py-1.5 rounded-lg bg-dark-800 text-xs text-white/80 font-medium opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+            Terminal Mode
+          </span>
+        </button>
+
+        {/* Game Launch Button */}
+        <button
+          onClick={() => setShowGame(true)}
+          className="w-12 h-12 rounded-full glass flex items-center justify-center text-white/40 hover:text-accent hover:bg-accent/10 hover:scale-110 transition-all group"
+          aria-label="Play Padel Breaker game"
+          title="🎮 Play Padel Breaker"
+        >
+          <Gamepad2 size={20} />
+          <span className="absolute right-full mr-3 px-3 py-1.5 rounded-lg bg-dark-800 text-xs text-white/80 font-medium opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+            Play Padel Breaker
+          </span>
+        </button>
+      </div>
       {/* Skip to content link for keyboard users */}
       <a 
         href="#main-content" 
