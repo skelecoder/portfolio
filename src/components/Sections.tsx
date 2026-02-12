@@ -95,7 +95,7 @@ export function Hero() {
         </h1>
         
         <p 
-          className={`text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-8 leading-relaxed transition-all duration-700 delay-300 ${
+          className={`text-lg md:text-xl text-[var(--text-secondary)] max-w-2xl mx-auto mb-8 leading-relaxed transition-all duration-700 delay-300 ${
             isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}
         >
@@ -117,7 +117,7 @@ export function Hero() {
           </a>
           <a 
             href="#contact" 
-            className="px-8 py-3 border border-white/20 hover:border-accent hover:text-accent transition-all rounded-full font-medium"
+            className="px-8 py-3 border border-[var(--glass-border)] hover:border-accent hover:text-accent transition-all rounded-full font-medium"
           >
             Get in Touch
           </a>
@@ -140,8 +140,8 @@ export function Hero() {
           isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
         }`}
       >
-        <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2 hover:border-accent transition-colors cursor-pointer">
-          <div className="w-1.5 h-3 bg-white/50 rounded-full animate-bounce" />
+        <div className="w-6 h-10 border-2 border-[var(--glass-border)] rounded-full flex justify-center pt-2 hover:border-accent transition-colors cursor-pointer">
+          <div className="w-1.5 h-3 bg-[var(--text-muted)] rounded-full animate-bounce" />
         </div>
       </div>
     </section>
@@ -155,7 +155,7 @@ function SocialLink({ href, icon, label }: { href: string; icon: React.ReactNode
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      className="w-12 h-12 rounded-full glass flex items-center justify-center text-white/60 hover:text-white hover:bg-accent/20 hover:border-accent/50 hover:scale-110 transition-all duration-300"
+      className="w-12 h-12 rounded-full glass flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-accent/20 hover:border-accent/50 hover:scale-110 transition-all duration-300"
     >
       {icon}
     </a>
@@ -170,21 +170,21 @@ export function About() {
         
         <FadeIn>
           <h2 className="text-3xl md:text-4xl font-bold mb-12">
-            <span className="text-white/40">01.</span> About
+            <span className="text-[var(--text-muted)]">01.</span> About
           </h2>
         </FadeIn>
         
         <div className="grid md:grid-cols-2 gap-12">
           <div>
             <FadeIn delay={100}>
-              <p className="text-lg text-white/70 leading-relaxed mb-6">
+              <p className="text-lg text-[var(--text-secondary)] leading-relaxed mb-6">
                 Based in Tangier, Morocco. Former architect turned software engineer.
                 Currently leading AI transformation at NTT Data while building X3 — 
                 the padel platform that will change how Morocco plays.
               </p>
             </FadeIn>
             <FadeIn delay={200}>
-              <p className="text-lg text-white/70 leading-relaxed">
+              <p className="text-lg text-[var(--text-secondary)] leading-relaxed">
                 When I'm not coding, you'll find me catching waves in Imsouane 
                 or exploring new automation possibilities with AI agents.
               </p>
@@ -215,7 +215,7 @@ function SkillCard({ icon, title, desc }: { icon: React.ReactNode; title: string
         <div className="text-accent group-hover:scale-110 transition-transform duration-300">{icon}</div>
         <div>
           <h3 className="font-semibold mb-1 group-hover:text-accent transition-colors">{title}</h3>
-          <p className="text-sm text-white/50">{desc}</p>
+          <p className="text-sm text-[var(--text-muted)]">{desc}</p>
         </div>
       </div>
     </div>
@@ -245,13 +245,13 @@ export function Projects() {
   ]
 
   return (
-    <section id="projects" className="py-32 px-6 bg-dark-800/50">
+    <section id="projects" className="py-32 px-6 bg-[var(--bg-secondary)]/50">
       <div className="max-w-5xl mx-auto">
         <GlowLine />
         
         <FadeIn>
           <h2 className="text-3xl md:text-4xl font-bold mb-12">
-            <span className="text-white/40">02.</span> Projects
+            <span className="text-[var(--text-muted)]">02.</span> Projects
           </h2>
         </FadeIn>
         
@@ -296,7 +296,7 @@ function ProjectCard({
             href={link} 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-white/40 hover:text-accent hover:scale-110 transition-all p-2"
+            className="text-[var(--text-muted)] hover:text-accent hover:scale-110 transition-all p-2"
             aria-label={`Visit ${title}`}
           >
             <ExternalLink size={20} />
@@ -304,7 +304,7 @@ function ProjectCard({
         )}
       </div>
       
-      <p className="text-white/60 mb-6 leading-relaxed">{desc}</p>
+      <p className="text-[var(--text-secondary)] mb-6 leading-relaxed">{desc}</p>
       
       <div className="flex flex-wrap gap-2">
         {tech.map((t, i) => (
@@ -329,12 +329,12 @@ export function Contact() {
         
         <FadeIn>
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            <span className="text-white/40">03.</span> Get in Touch
+            <span className="text-[var(--text-muted)]">03.</span> Get in Touch
           </h2>
         </FadeIn>
         
         <FadeIn delay={100}>
-          <p className="text-lg text-white/60 mb-12 leading-relaxed">
+          <p className="text-lg text-[var(--text-secondary)] mb-12 leading-relaxed">
             Whether you want to collaborate on a project, talk about AI, 
             or just say hi — my inbox is always open.
           </p>
@@ -351,8 +351,8 @@ export function Contact() {
         </FadeIn>
         
         <FadeIn delay={400}>
-          <div className="mt-24 text-white/30 text-sm font-mono">
-            <p className="hover:text-white/50 transition-colors">Designed & Built by Amine Bouhlal</p>
+          <div className="mt-24 text-[var(--text-muted)] text-sm font-mono">
+            <p className="hover:text-[var(--text-secondary)] transition-colors">Designed & Built by Amine Bouhlal</p>
             <p className="mt-2">© 2026</p>
           </div>
         </FadeIn>

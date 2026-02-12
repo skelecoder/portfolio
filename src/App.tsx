@@ -2,6 +2,7 @@ import { lazy, Suspense, useState, useEffect } from 'react'
 import { Menu, X, Gamepad2, Terminal, Keyboard } from 'lucide-react'
 import { Hero, About, Projects, Contact } from './components/Sections'
 import { Cursor } from './components/Cursor'
+import { ThemeToggle } from './components/ThemeToggle'
 
 // Lazy load heavy components
 const Avatar3D = lazy(() => import('./components/Avatar3D').then(m => ({ default: m.Avatar3D })))
@@ -59,7 +60,7 @@ function App() {
   }, [])
 
   return (
-    <div className="bg-dark-900 min-h-screen">
+    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300">
       {/* Custom cursor */}
       <Cursor />
       
@@ -97,12 +98,12 @@ function App() {
         {/* Keyboard Shortcuts Button */}
         <button
           onClick={() => setShowHints(true)}
-          className="w-10 h-10 rounded-full glass flex items-center justify-center text-white/30 hover:text-white/60 hover:bg-white/5 hover:scale-110 transition-all group"
+          className="w-10 h-10 rounded-full glass flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text-secondary)] hover:bg-[var(--glass-bg)] hover:scale-110 transition-all group"
           aria-label="Show keyboard shortcuts"
           title="⌨️ Keyboard shortcuts (or press ?)"
         >
           <Keyboard size={16} />
-          <span className="absolute right-full mr-3 px-3 py-1.5 rounded-lg bg-dark-800 text-xs text-white/80 font-medium opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+          <span className="absolute right-full mr-3 px-3 py-1.5 rounded-lg bg-[var(--bg-secondary)] text-xs text-[var(--text-secondary)] font-medium opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
             Shortcuts
           </span>
         </button>
@@ -110,12 +111,12 @@ function App() {
         {/* Terminal Mode Button */}
         <button
           onClick={() => setShowTerminal(true)}
-          className="w-12 h-12 rounded-full glass flex items-center justify-center text-white/40 hover:text-green-400 hover:bg-green-400/10 hover:scale-110 transition-all group"
+          className="w-12 h-12 rounded-full glass flex items-center justify-center text-[var(--text-muted)] hover:text-green-400 hover:bg-green-400/10 hover:scale-110 transition-all group"
           aria-label="Open terminal view"
           title="🖥️ Terminal Mode (or press T)"
         >
           <Terminal size={20} />
-          <span className="absolute right-full mr-3 px-3 py-1.5 rounded-lg bg-dark-800 text-xs text-white/80 font-medium opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+          <span className="absolute right-full mr-3 px-3 py-1.5 rounded-lg bg-[var(--bg-secondary)] text-xs text-[var(--text-secondary)] font-medium opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
             Terminal Mode
           </span>
         </button>
@@ -123,12 +124,12 @@ function App() {
         {/* Game Launch Button */}
         <button
           onClick={() => setShowGame(true)}
-          className="w-12 h-12 rounded-full glass flex items-center justify-center text-white/40 hover:text-accent hover:bg-accent/10 hover:scale-110 transition-all group"
+          className="w-12 h-12 rounded-full glass flex items-center justify-center text-[var(--text-muted)] hover:text-accent hover:bg-accent/10 hover:scale-110 transition-all group"
           aria-label="Play Padel Breaker game"
           title="🎮 Play Padel Breaker"
         >
           <Gamepad2 size={20} />
-          <span className="absolute right-full mr-3 px-3 py-1.5 rounded-lg bg-dark-800 text-xs text-white/80 font-medium opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+          <span className="absolute right-full mr-3 px-3 py-1.5 rounded-lg bg-[var(--bg-secondary)] text-xs text-[var(--text-secondary)] font-medium opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
             Play Padel Breaker
           </span>
         </button>
@@ -147,28 +148,32 @@ function App() {
           <a href="#" className="text-xl font-bold gradient-text">AB</a>
           
           {/* Desktop Navigation */}
-          <div className="hidden md:flex gap-8 text-sm font-medium">
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium">
             {navLinks.map(link => (
-              <a key={link.href} href={link.href} className="text-white/60 hover:text-white transition-colors">
+              <a key={link.href} href={link.href} className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors">
                 {link.label}
               </a>
             ))}
+            <ThemeToggle />
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden w-10 h-10 flex items-center justify-center text-white/60 hover:text-white transition-colors"
-            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={mobileMenuOpen}
-          >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          {/* Mobile: Theme + Menu */}
+          <div className="md:hidden flex items-center gap-2">
+            <ThemeToggle />
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="w-10 h-10 flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={mobileMenuOpen}
+            >
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu Overlay */}
         <div
-          className={`md:hidden fixed inset-0 top-[72px] bg-dark-900/95 backdrop-blur-lg transition-all duration-300 ${
+          className={`md:hidden fixed inset-0 top-[72px] bg-[var(--bg-primary)]/95 backdrop-blur-lg transition-all duration-300 ${
             mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
           }`}
         >
@@ -178,7 +183,7 @@ function App() {
                 key={link.href}
                 href={link.href}
                 onClick={closeMobileMenu}
-                className="text-2xl font-medium text-white/80 hover:text-white hover:gradient-text transition-all"
+                className="text-2xl font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:gradient-text transition-all"
               >
                 {link.label}
               </a>
