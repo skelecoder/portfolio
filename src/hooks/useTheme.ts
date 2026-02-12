@@ -1,6 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 type Theme = 'dark' | 'light'
+
+// Check if View Transitions API is available
+const supportsViewTransitions = typeof document !== 'undefined' && 
+  'startViewTransition' in document
 
 export function useTheme() {
   const [theme, setTheme] = useState<Theme>(() => {
@@ -16,10 +20,10 @@ export function useTheme() {
     return 'dark'
   })
 
-  useEffect(() => {
+  const applyTheme = useCallback((newTheme: Theme) => {
     const root = document.documentElement
     
-    if (theme === 'dark') {
+    if (newTheme === 'dark') {
       root.classList.add('dark')
       root.classList.remove('light')
     } else {
@@ -27,8 +31,12 @@ export function useTheme() {
       root.classList.remove('dark')
     }
     
-    localStorage.setItem('theme', theme)
-  }, [theme])
+    localStorage.setItem('theme', newTheme)
+  }, [])
+
+  useEffect(() => {
+    applyTheme(theme)
+  }, [theme, applyTheme])
 
   // Listen for system preference changes
   useEffect(() => {
@@ -46,7 +54,18 @@ export function useTheme() {
     return () => mediaQuery.removeEventListener('change', handleChange)
   }, [])
 
-  const toggle = () => setTheme(prev => prev === 'dark' ? 'light' : 'dark')
+  const toggle = useCallback(() => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark'
+    
+    // Use View Transitions API if available for smooth animation
+    if (supportsViewTransitions) {
+      (document as any).startViewTransition(() => {
+        setTheme(newTheme)
+      })
+    } else {
+      setTheme(newTheme)
+    }
+  }, [theme])
 
   return { theme, setTheme, toggle }
 }
