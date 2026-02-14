@@ -184,10 +184,25 @@ export function About() {
               </p>
             </FadeIn>
             <FadeIn delay={200}>
-              <p className="text-lg text-[var(--text-secondary)] leading-relaxed">
+              <p className="text-lg text-[var(--text-secondary)] leading-relaxed mb-8">
                 When I'm not coding, you'll find me catching waves in Imsouane 
                 or exploring new automation possibilities with AI agents.
               </p>
+            </FadeIn>
+            
+            <FadeIn delay={300}>
+              <div className="flex flex-wrap gap-2">
+                <TechBadge name="TypeScript" color="#3178C6" />
+                <TechBadge name="React" color="#61DAFB" />
+                <TechBadge name="Next.js" color="#000000" />
+                <TechBadge name="Node.js" color="#339933" />
+                <TechBadge name="Python" color="#3776AB" />
+                <TechBadge name="GCP" color="#4285F4" />
+                <TechBadge name="Supabase" color="#3FCF8E" />
+                <TechBadge name="Vercel" color="#000000" />
+                <TechBadge name="Docker" color="#2496ED" />
+                <TechBadge name="Tailwind" color="#06B6D4" />
+              </div>
             </FadeIn>
           </div>
           
@@ -219,6 +234,24 @@ function SkillCard({ icon, title, desc }: { icon: React.ReactNode; title: string
         </div>
       </div>
     </div>
+  )
+}
+
+function TechBadge({ name, color }: { name: string; color: string }) {
+  return (
+    <span 
+      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium glass hover:scale-105 hover:-translate-y-0.5 transition-all duration-300 cursor-default group"
+      style={{ 
+        '--badge-color': color,
+        borderColor: `${color}33`,
+      } as React.CSSProperties}
+    >
+      <span 
+        className="w-2 h-2 rounded-full group-hover:animate-pulse"
+        style={{ backgroundColor: color }}
+      />
+      <span className="group-hover:text-[var(--badge-color)] transition-colors">{name}</span>
+    </span>
   )
 }
 
