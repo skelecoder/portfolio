@@ -217,6 +217,26 @@ export function About() {
             <FadeIn delay={350} direction="right">
               <SkillCard icon={<Rocket />} title="Cloud & DevOps" desc="GCP, Vercel, Docker, Kubernetes" />
             </FadeIn>
+            
+            <FadeIn delay={450} direction="right">
+              <a 
+                href="https://github.com/skelecoder" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block glass rounded-xl p-4 hover:bg-white/5 hover:border-accent/30 hover:scale-[1.02] transition-all duration-300 group"
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <Github className="w-5 h-5 text-accent group-hover:scale-110 transition-transform" />
+                  <span className="font-semibold group-hover:text-accent transition-colors">GitHub Activity</span>
+                </div>
+                <img 
+                  src="https://github-readme-stats.vercel.app/api?username=skelecoder&show_icons=true&hide_border=true&bg_color=00000000&title_color=818cf8&icon_color=818cf8&text_color=94a3b8&hide_rank=true&hide_title=true&include_all_commits=true"
+                  alt="GitHub Stats"
+                  className="w-full opacity-90 group-hover:opacity-100 transition-opacity"
+                  loading="lazy"
+                />
+              </a>
+            </FadeIn>
           </div>
         </div>
       </div>
