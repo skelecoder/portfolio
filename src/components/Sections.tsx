@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Github, Linkedin, Twitter, Mail, ExternalLink, Code2, Rocket, Brain } from 'lucide-react'
 import { useInView } from '../hooks/useInView'
 
@@ -355,36 +356,154 @@ function ProjectCard({
 }
 
 export function Contact() {
+  const [formState, setFormState] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' })
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setFormState('sending')
+
+    try {
+      const response = await fetch('https://formspree.io/f/xpwzqkwa', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+
+      if (response.ok) {
+        setFormState('success')
+        setFormData({ name: '', email: '', message: '' })
+      } else {
+        setFormState('error')
+      }
+    } catch {
+      setFormState('error')
+    }
+  }
+
   return (
     <section id="contact" className="py-32 px-6">
-      <div className="max-w-2xl mx-auto text-center">
+      <div className="max-w-2xl mx-auto">
         <GlowLine />
         
         <FadeIn>
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">
             <span className="text-[var(--text-muted)]">03.</span> Get in Touch
           </h2>
         </FadeIn>
         
         <FadeIn delay={100}>
-          <p className="text-lg text-[var(--text-secondary)] mb-12 leading-relaxed">
+          <p className="text-lg text-[var(--text-secondary)] mb-12 leading-relaxed text-center">
             Whether you want to collaborate on a project, talk about AI, 
             or just say hi — my inbox is always open.
           </p>
         </FadeIn>
-        
-        <FadeIn delay={200}>
-          <a 
-            href="mailto:amine@x3.ma"
-            className="group inline-block px-12 py-4 bg-accent hover:bg-accent-light transition-all rounded-full font-medium text-lg relative overflow-hidden hover:scale-105 hover:shadow-lg hover:shadow-accent/25"
-          >
-            <span className="relative z-10">Say Hello</span>
-            <div className="absolute inset-0 bg-gradient-to-r from-accent-light via-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          </a>
-        </FadeIn>
+
+        {formState === 'success' ? (
+          <FadeIn>
+            <div className="text-center py-12 px-6 rounded-2xl bg-accent/10 border border-accent/30">
+              <div className="text-4xl mb-4">✨</div>
+              <h3 className="text-xl font-semibold mb-2 text-accent">Message Sent!</h3>
+              <p className="text-[var(--text-secondary)]">Thanks for reaching out. I'll get back to you soon.</p>
+              <button 
+                onClick={() => setFormState('idle')}
+                className="mt-6 text-accent hover:text-accent-light transition-colors font-medium"
+              >
+                Send another message
+              </button>
+            </div>
+          </FadeIn>
+        ) : (
+          <FadeIn delay={200}>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-[var(--text-secondary)] mb-2">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    value={formData.name}
+                    onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                    className="w-full px-4 py-3 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-subtle)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all"
+                    placeholder="Your name"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-[var(--text-secondary)] mb-2">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                    className="w-full px-4 py-3 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-subtle)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all"
+                    placeholder="your@email.com"
+                  />
+                </div>
+              </div>
+              
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium text-[var(--text-secondary)] mb-2">
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  required
+                  rows={5}
+                  value={formData.message}
+                  onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
+                  className="w-full px-4 py-3 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-subtle)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all resize-none"
+                  placeholder="Tell me about your project, idea, or just say hello..."
+                />
+              </div>
+
+              {formState === 'error' && (
+                <div className="text-red-400 text-sm flex items-center gap-2">
+                  <span>⚠️</span>
+                  <span>Something went wrong. Please try again or email me directly.</span>
+                </div>
+              )}
+
+              <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
+                <button
+                  type="submit"
+                  disabled={formState === 'sending'}
+                  className="group w-full sm:w-auto px-12 py-4 bg-accent hover:bg-accent-light disabled:opacity-70 disabled:cursor-not-allowed transition-all rounded-full font-medium text-lg relative overflow-hidden hover:scale-105 hover:shadow-lg hover:shadow-accent/25"
+                >
+                  <span className="relative z-10 flex items-center justify-center gap-2">
+                    {formState === 'sending' ? (
+                      <>
+                        <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      'Send Message'
+                    )}
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-accent-light via-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                </button>
+                
+                <span className="text-[var(--text-muted)] text-sm">
+                  or email me at{' '}
+                  <a href="mailto:amine@x3.ma" className="text-accent hover:text-accent-light transition-colors">
+                    amine@x3.ma
+                  </a>
+                </span>
+              </div>
+            </form>
+          </FadeIn>
+        )}
         
         <FadeIn delay={400}>
-          <div className="mt-24 text-[var(--text-muted)] text-sm font-mono">
+          <div className="mt-24 text-[var(--text-muted)] text-sm font-mono text-center">
             <p className="hover:text-[var(--text-secondary)] transition-colors">Designed & Built by Amine Bouhlal</p>
             <p className="mt-2">© 2026</p>
           </div>
