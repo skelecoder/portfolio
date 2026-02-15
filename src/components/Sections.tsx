@@ -276,6 +276,87 @@ function TechBadge({ name, color }: { name: string; color: string }) {
   )
 }
 
+// Experience timeline data
+const experiences = [
+  {
+    year: '2024 - Present',
+    role: 'AI Transformation Lead',
+    company: 'NTT Data',
+    desc: 'Leading AI initiatives and agent orchestration platforms. Driving enterprise automation with multi-agent systems.',
+    tech: ['Vertex AI', 'LangChain', 'Python', 'n8n'],
+  },
+  {
+    year: '2022 - 2024',
+    role: 'Senior Software Engineer',
+    company: 'T-Systems / NTT',
+    desc: 'Built scalable cloud solutions and internal tools. Led technical architecture for key client projects.',
+    tech: ['GCP', 'TypeScript', 'React', 'Node.js'],
+  },
+  {
+    year: '2020 - 2022',
+    role: 'Full Stack Developer',
+    company: 'Freelance',
+    desc: 'Developed web applications for startups and SMBs. Specialized in React ecosystems and cloud deployments.',
+    tech: ['React', 'Next.js', 'Firebase', 'AWS'],
+  },
+  {
+    year: '2016 - 2020',
+    role: 'Architect → Developer',
+    company: 'Career Pivot',
+    desc: 'Transitioned from architecture to software engineering. Self-taught programming while working in design.',
+    tech: ['Architecture', 'AutoCAD', 'Python', 'Web Dev'],
+  },
+]
+
+export function Experience() {
+  return (
+    <section id="experience" className="py-32 px-6">
+      <div className="max-w-4xl mx-auto">
+        <GlowLine />
+        
+        <FadeIn>
+          <h2 className="text-3xl md:text-4xl font-bold mb-12">
+            <span className="text-[var(--text-muted)]">02.</span> Experience
+          </h2>
+        </FadeIn>
+        
+        <div className="relative">
+          {/* Timeline line */}
+          <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-accent/50 via-accent/20 to-transparent transform md:-translate-x-1/2" />
+          
+          {experiences.map((exp, i) => (
+            <FadeIn key={i} delay={i * 100} direction={i % 2 === 0 ? 'left' : 'right'}>
+              <div className={`relative flex flex-col md:flex-row gap-8 mb-12 ${i % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
+                {/* Timeline dot */}
+                <div className="absolute left-0 md:left-1/2 w-3 h-3 bg-accent rounded-full transform -translate-x-1/2 mt-2 ring-4 ring-[var(--bg-primary)] z-10" />
+                
+                {/* Content */}
+                <div className={`ml-6 md:ml-0 md:w-1/2 ${i % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'}`}>
+                  <span className="text-accent font-mono text-sm">{exp.year}</span>
+                  <h3 className="text-xl font-bold mt-1">{exp.role}</h3>
+                  <p className="text-[var(--text-muted)] font-medium">{exp.company}</p>
+                  <p className="text-[var(--text-secondary)] mt-2 text-sm leading-relaxed">{exp.desc}</p>
+                  
+                  <div className={`flex flex-wrap gap-2 mt-3 ${i % 2 === 0 ? 'md:justify-end' : ''}`}>
+                    {exp.tech.map((t, j) => (
+                      <span key={j} className="px-2 py-1 text-xs font-mono text-accent/80 bg-accent/10 rounded-md">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                
+                {/* Spacer for alternating layout */}
+                <div className="hidden md:block md:w-1/2" />
+              </div>
+            </FadeIn>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export function Projects() {
   const projects = [
     {
@@ -305,7 +386,7 @@ export function Projects() {
         
         <FadeIn>
           <h2 className="text-3xl md:text-4xl font-bold mb-12">
-            <span className="text-[var(--text-muted)]">02.</span> Projects
+            <span className="text-[var(--text-muted)]">03.</span> Projects
           </h2>
         </FadeIn>
         
@@ -408,7 +489,7 @@ export function Contact() {
         
         <FadeIn>
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">
-            <span className="text-[var(--text-muted)]">03.</span> Get in Touch
+            <span className="text-[var(--text-muted)]">04.</span> Get in Touch
           </h2>
         </FadeIn>
         

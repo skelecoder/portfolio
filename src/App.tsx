@@ -1,6 +1,6 @@
 import { lazy, Suspense, useState, useEffect } from 'react'
 import { Menu, X, Gamepad2, Terminal, Keyboard } from 'lucide-react'
-import { Hero, About, Projects, Contact } from './components/Sections'
+import { Hero, About, Experience, Projects, Contact } from './components/Sections'
 import { Cursor } from './components/Cursor'
 import { ThemeToggle } from './components/ThemeToggle'
 
@@ -27,6 +27,7 @@ function Avatar3DFallback() {
 // Navigation links data
 const navLinks = [
   { href: '#about', label: 'About' },
+  { href: '#experience', label: 'Experience' },
   { href: '#projects', label: 'Projects' },
   { href: '#contact', label: 'Contact' },
 ]
@@ -206,6 +207,7 @@ function App() {
 
         {/* Sections */}
         <About />
+        <Experience />
         <Projects />
         <Contact />
       </main>
