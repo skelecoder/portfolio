@@ -456,6 +456,79 @@ function ProjectCard({
   )
 }
 
+// Testimonials data
+const testimonials = [
+  {
+    quote: "Amine has an exceptional ability to translate complex AI concepts into practical business solutions. His work on our automation platform saved us hundreds of hours.",
+    name: "Carlos Martínez",
+    role: "Head of Digital Innovation",
+    company: "NTT Data",
+  },
+  {
+    quote: "Working with Amine was a game-changer for our startup. He built our MVP in record time and the architecture has scaled beautifully with our growth.",
+    name: "Sara El Idrissi",
+    role: "Founder & CEO",
+    company: "TechStart Morocco",
+  },
+  {
+    quote: "Rare to find someone who excels at both technical implementation and product thinking. Amine brings a unique perspective from his architecture background.",
+    name: "Thomas Weber",
+    role: "Engineering Manager",
+    company: "T-Systems",
+  },
+]
+
+export function Testimonials() {
+  return (
+    <section id="testimonials" className="py-32 px-6">
+      <div className="max-w-5xl mx-auto">
+        <GlowLine />
+        
+        <FadeIn>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <span className="text-[var(--text-muted)]">04.</span> What People Say
+          </h2>
+        </FadeIn>
+        
+        <FadeIn delay={100}>
+          <p className="text-lg text-[var(--text-secondary)] mb-12 max-w-2xl">
+            Feedback from colleagues and clients I've had the pleasure of working with.
+          </p>
+        </FadeIn>
+        
+        <div className="grid md:grid-cols-3 gap-6">
+          {testimonials.map((testimonial, i) => (
+            <FadeIn key={i} delay={150 + i * 100}>
+              <TestimonialCard {...testimonial} />
+            </FadeIn>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function TestimonialCard({ quote, name, role, company }: { quote: string; name: string; role: string; company: string }) {
+  return (
+    <div className="glass rounded-2xl p-6 h-full flex flex-col hover:bg-white/5 hover:border-accent/20 hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300 group">
+      {/* Quote icon */}
+      <div className="text-4xl text-accent/30 mb-4 font-serif leading-none group-hover:text-accent/50 transition-colors">"</div>
+      
+      {/* Quote text */}
+      <p className="text-[var(--text-secondary)] leading-relaxed flex-grow mb-6 text-sm md:text-base">
+        {quote}
+      </p>
+      
+      {/* Author */}
+      <div className="border-t border-[var(--glass-border)] pt-4 mt-auto">
+        <p className="font-semibold text-[var(--text-primary)] group-hover:text-accent transition-colors">{name}</p>
+        <p className="text-sm text-[var(--text-muted)]">{role}</p>
+        <p className="text-xs text-accent/70 font-mono mt-1">{company}</p>
+      </div>
+    </div>
+  )
+}
+
 export function Contact() {
   const [formState, setFormState] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [formData, setFormData] = useState({ name: '', email: '', message: '' })
@@ -489,7 +562,7 @@ export function Contact() {
         
         <FadeIn>
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">
-            <span className="text-[var(--text-muted)]">04.</span> Get in Touch
+            <span className="text-[var(--text-muted)]">05.</span> Get in Touch
           </h2>
         </FadeIn>
         
