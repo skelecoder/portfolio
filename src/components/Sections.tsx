@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Github, Linkedin, Twitter, Mail, ExternalLink, Code2, Rocket, Brain } from 'lucide-react'
+import { Github, Linkedin, Twitter, Mail, ExternalLink, Code2, Rocket, Brain, Calendar, ArrowUpRight } from 'lucide-react'
 import { useInView } from '../hooks/useInView'
 
 // Reusable animated wrapper component
@@ -456,6 +456,133 @@ function ProjectCard({
   )
 }
 
+// Blog posts data
+const blogPosts = [
+  {
+    title: "Building AI Agents That Actually Work in Production",
+    excerpt: "Lessons learned from deploying multi-agent systems at enterprise scale. Spoiler: it's not about the model.",
+    date: "2026-02-10",
+    readTime: "8 min",
+    tags: ["AI", "Agents", "Production"],
+    link: "#", // TODO: Link to actual post
+  },
+  {
+    title: "From Architect to Developer: A Career Pivot Story",
+    excerpt: "How my background in architecture shaped my approach to software design and why I don't regret the switch.",
+    date: "2026-01-15",
+    readTime: "6 min",
+    tags: ["Career", "Architecture", "Personal"],
+    link: "#",
+  },
+  {
+    title: "Why Morocco Needs a Padel Tech Revolution",
+    excerpt: "The story behind X3 and how we're using technology to grow the sport we love.",
+    date: "2025-12-20",
+    readTime: "5 min",
+    tags: ["Startups", "Padel", "X3"],
+    link: "#",
+  },
+]
+
+export function Blog() {
+  return (
+    <section id="blog" className="py-32 px-6">
+      <div className="max-w-5xl mx-auto">
+        <GlowLine />
+        
+        <FadeIn>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <span className="text-[var(--text-muted)]">04.</span> Writing
+          </h2>
+        </FadeIn>
+        
+        <FadeIn delay={100}>
+          <p className="text-lg text-[var(--text-secondary)] mb-12 max-w-2xl">
+            Thoughts on AI, engineering, startups, and the occasional surf trip.
+          </p>
+        </FadeIn>
+        
+        <div className="grid md:grid-cols-3 gap-6">
+          {blogPosts.map((post, i) => (
+            <FadeIn key={i} delay={150 + i * 100}>
+              <BlogPostCard {...post} />
+            </FadeIn>
+          ))}
+        </div>
+        
+        <FadeIn delay={500}>
+          <div className="mt-12 text-center">
+            <span className="text-[var(--text-muted)] text-sm font-mono">
+              More posts coming soon...
+            </span>
+          </div>
+        </FadeIn>
+      </div>
+    </section>
+  )
+}
+
+function BlogPostCard({ 
+  title, 
+  excerpt, 
+  date, 
+  readTime, 
+  tags, 
+  link 
+}: { 
+  title: string
+  excerpt: string
+  date: string
+  readTime: string
+  tags: string[]
+  link: string
+}) {
+  const formattedDate = new Date(date).toLocaleDateString('en-US', { 
+    month: 'short', 
+    day: 'numeric',
+    year: 'numeric'
+  })
+  
+  return (
+    <a 
+      href={link}
+      className="glass rounded-2xl p-6 h-full flex flex-col hover:bg-white/5 hover:border-accent/20 hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300 group block"
+    >
+      {/* Tags */}
+      <div className="flex flex-wrap gap-2 mb-4">
+        {tags.map((tag, i) => (
+          <span 
+            key={i}
+            className="px-2 py-0.5 text-xs font-mono text-accent/70 bg-accent/10 rounded-md"
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+      
+      {/* Title */}
+      <h3 className="text-lg font-bold mb-3 group-hover:text-accent transition-colors flex items-start gap-2">
+        <span className="flex-1">{title}</span>
+        <ArrowUpRight size={18} className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity mt-1" />
+      </h3>
+      
+      {/* Excerpt */}
+      <p className="text-sm text-[var(--text-secondary)] leading-relaxed flex-grow mb-4">
+        {excerpt}
+      </p>
+      
+      {/* Meta */}
+      <div className="flex items-center gap-4 text-xs text-[var(--text-muted)] border-t border-[var(--glass-border)] pt-4 mt-auto">
+        <span className="flex items-center gap-1">
+          <Calendar size={12} />
+          {formattedDate}
+        </span>
+        <span>{readTime} read</span>
+      </div>
+    </a>
+  )
+}
+
 // Testimonials data
 const testimonials = [
   {
@@ -486,7 +613,7 @@ export function Testimonials() {
         
         <FadeIn>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            <span className="text-[var(--text-muted)]">04.</span> What People Say
+            <span className="text-[var(--text-muted)]">05.</span> What People Say
           </h2>
         </FadeIn>
         
@@ -562,7 +689,7 @@ export function Contact() {
         
         <FadeIn>
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">
-            <span className="text-[var(--text-muted)]">05.</span> Get in Touch
+            <span className="text-[var(--text-muted)]">06.</span> Get in Touch
           </h2>
         </FadeIn>
         

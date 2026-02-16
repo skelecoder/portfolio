@@ -1,6 +1,6 @@
 import { lazy, Suspense, useState, useEffect } from 'react'
 import { Menu, X, Gamepad2, Terminal, Keyboard } from 'lucide-react'
-import { Hero, About, Experience, Projects, Testimonials, Contact } from './components/Sections'
+import { Hero, About, Experience, Projects, Blog, Testimonials, Contact } from './components/Sections'
 import { Cursor } from './components/Cursor'
 import { ThemeToggle } from './components/ThemeToggle'
 
@@ -209,6 +209,7 @@ function App() {
         <About />
         <Experience />
         <Projects />
+        <Blog />
         <Testimonials />
         <Contact />
       </main>
