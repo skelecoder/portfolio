@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Amine Bouhlal - Writing</title>
+    <description>Thoughts on AI, engineering, startups, and the occasional surf trip.</description>
+    <link>https://aminebouhlal.com</link>
+    <atom:link href="https://aminebouhlal.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 10 Feb 2026 12:00:00 GMT</lastBuildDate>
+    <managingEditor>contact@aminebouhlal.com (Amine Bouhlal)</managingEditor>
+    <webMaster>contact@aminebouhlal.com (Amine Bouhlal)</webMaster>
+    <image>
+      <url>https://aminebouhlal.com/og-image.png</url>
+      <title>Amine Bouhlal - Writing</title>
+      <link>https://aminebouhlal.com</link>
+    </image>
+    
+    <item>
+      <title>Building AI Agents That Actually Work in Production</title>
+      <description>Lessons learned from deploying multi-agent systems at enterprise scale. Spoiler: it's not about the model.</description>
+      <link>https://aminebouhlal.com/#blog</link>
+      <guid isPermaLink="false">post-ai-agents-production-2026-02-10</guid>
+      <pubDate>Mon, 10 Feb 2026 09:00:00 GMT</pubDate>
+      <category>AI</category>
+      <category>Agents</category>
+      <category>Production</category>
+    </item>
+    
+    <item>
+      <title>From Architect to Developer: A Career Pivot Story</title>
+      <description>How my background in architecture shaped my approach to software design and why I don't regret the switch.</description>
+      <link>https://aminebouhlal.com/#blog</link>
+      <guid isPermaLink="false">post-architect-developer-2026-01-15</guid>
+      <pubDate>Wed, 15 Jan 2026 09:00:00 GMT</pubDate>
+      <category>Career</category>
+      <category>Architecture</category>
+      <category>Personal</category>
+    </item>
+    
+    <item>
+      <title>Why Morocco Needs a Padel Tech Revolution</title>
+      <description>The story behind X3 and how we're using technology to grow the sport we love.</description>
+      <link>https://aminebouhlal.com/#blog</link>
+      <guid isPermaLink="false">post-morocco-padel-tech-2025-12-20</guid>
+      <pubDate>Sat, 20 Dec 2025 09:00:00 GMT</pubDate>
+      <category>Startups</category>
+      <category>Padel</category>
+      <category>X3</category>
+    </item>
+  </channel>
+</rss>

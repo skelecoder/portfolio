@@ -19,6 +19,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://portfolio-seven-mu-54.vercel.app/#blog</loc>
+    <lastmod>2026-02-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://portfolio-seven-mu-54.vercel.app/#contact</loc>
     <lastmod>2026-02-07</lastmod>
     <changefreq>monthly</changefreq>
