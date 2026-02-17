@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Github, Linkedin, Twitter, Mail, ExternalLink, Code2, Rocket, Brain, Calendar, ArrowUpRight } from 'lucide-react'
 import { useInView } from '../hooks/useInView'
+import { useLanguage } from '../hooks/useLanguage'
 
 // Reusable animated wrapper component
 function FadeIn({ 
@@ -70,6 +71,7 @@ function GlowLine() {
 
 export function Hero() {
   const { ref, isInView } = useInView({ threshold: 0.3 })
+  const { t } = useLanguage()
 
   return (
     <section ref={ref} className="min-h-screen flex flex-col justify-center items-center relative px-6">
@@ -81,7 +83,7 @@ export function Hero() {
             isInView ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
           }`}
         >
-          Tech Entrepreneur · AI Engineer · Surfer
+          {t('hero.role')}
         </p>
         
         <h1 
@@ -100,8 +102,7 @@ export function Hero() {
             isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}
         >
-          Building the future of padel in Morocco with AI-driven solutions.
-          Passionate about automation, agents, and turning complex problems into elegant products.
+          {t('hero.description')}
         </p>
         
         <div 
@@ -113,14 +114,14 @@ export function Hero() {
             href="#projects" 
             className="group px-8 py-3 bg-accent hover:bg-accent-light transition-all rounded-full font-medium relative overflow-hidden"
           >
-            <span className="relative z-10">View Work</span>
+            <span className="relative z-10">{t('hero.cta')}</span>
             <div className="absolute inset-0 bg-gradient-to-r from-accent-light to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
           </a>
           <a 
             href="#contact" 
             className="px-8 py-3 border border-[var(--glass-border)] hover:border-accent hover:text-accent transition-all rounded-full font-medium"
           >
-            Get in Touch
+            {t('nav.contact')}
           </a>
         </div>
         
@@ -164,6 +165,8 @@ function SocialLink({ href, icon, label }: { href: string; icon: React.ReactNode
 }
 
 export function About() {
+  const { t } = useLanguage()
+  
   return (
     <section id="about" className="py-32 px-6">
       <div className="max-w-4xl mx-auto">
@@ -171,7 +174,7 @@ export function About() {
         
         <FadeIn>
           <h2 className="text-3xl md:text-4xl font-bold mb-12">
-            <span className="text-[var(--text-muted)]">01.</span> About
+            <span className="text-[var(--text-muted)]">01.</span> {t('about.title')}
           </h2>
         </FadeIn>
         
@@ -309,6 +312,8 @@ const experiences = [
 ]
 
 export function Experience() {
+  const { t } = useLanguage()
+  
   return (
     <section id="experience" className="py-32 px-6">
       <div className="max-w-4xl mx-auto">
@@ -316,7 +321,7 @@ export function Experience() {
         
         <FadeIn>
           <h2 className="text-3xl md:text-4xl font-bold mb-12">
-            <span className="text-[var(--text-muted)]">02.</span> Experience
+            <span className="text-[var(--text-muted)]">02.</span> {t('experience.title')}
           </h2>
         </FadeIn>
         
@@ -358,6 +363,7 @@ export function Experience() {
 }
 
 export function Projects() {
+  const { t } = useLanguage()
   const projects = [
     {
       title: 'X3',
@@ -386,7 +392,7 @@ export function Projects() {
         
         <FadeIn>
           <h2 className="text-3xl md:text-4xl font-bold mb-12">
-            <span className="text-[var(--text-muted)]">03.</span> Projects
+            <span className="text-[var(--text-muted)]">03.</span> {t('projects.title')}
           </h2>
         </FadeIn>
         
@@ -485,6 +491,8 @@ const blogPosts = [
 ]
 
 export function Blog() {
+  const { t } = useLanguage()
+  
   return (
     <section id="blog" className="py-32 px-6">
       <div className="max-w-5xl mx-auto">
@@ -492,13 +500,13 @@ export function Blog() {
         
         <FadeIn>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            <span className="text-[var(--text-muted)]">04.</span> Writing
+            <span className="text-[var(--text-muted)]">04.</span> {t('blog.title')}
           </h2>
         </FadeIn>
         
         <FadeIn delay={100}>
           <p className="text-lg text-[var(--text-secondary)] mb-12 max-w-2xl">
-            Thoughts on AI, engineering, startups, and the occasional surf trip.
+            {t('blog.subtitle')}
           </p>
         </FadeIn>
         
@@ -513,7 +521,7 @@ export function Blog() {
         <FadeIn delay={500}>
           <div className="mt-12 text-center">
             <span className="text-[var(--text-muted)] text-sm font-mono">
-              More posts coming soon...
+              {t('blog.more')}
             </span>
           </div>
         </FadeIn>
@@ -606,6 +614,8 @@ const testimonials = [
 ]
 
 export function Testimonials() {
+  const { t } = useLanguage()
+  
   return (
     <section id="testimonials" className="py-32 px-6">
       <div className="max-w-5xl mx-auto">
@@ -613,13 +623,13 @@ export function Testimonials() {
         
         <FadeIn>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            <span className="text-[var(--text-muted)]">05.</span> What People Say
+            <span className="text-[var(--text-muted)]">05.</span> {t('testimonials.title')}
           </h2>
         </FadeIn>
         
         <FadeIn delay={100}>
           <p className="text-lg text-[var(--text-secondary)] mb-12 max-w-2xl">
-            Feedback from colleagues and clients I've had the pleasure of working with.
+            {t('testimonials.subtitle')}
           </p>
         </FadeIn>
         
@@ -657,6 +667,7 @@ function TestimonialCard({ quote, name, role, company }: { quote: string; name: 
 }
 
 export function Contact() {
+  const { t } = useLanguage()
   const [formState, setFormState] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [formData, setFormData] = useState({ name: '', email: '', message: '' })
 
@@ -689,14 +700,13 @@ export function Contact() {
         
         <FadeIn>
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">
-            <span className="text-[var(--text-muted)]">06.</span> Get in Touch
+            <span className="text-[var(--text-muted)]">06.</span> {t('contact.title')}
           </h2>
         </FadeIn>
         
         <FadeIn delay={100}>
           <p className="text-lg text-[var(--text-secondary)] mb-12 leading-relaxed text-center">
-            Whether you want to collaborate on a project, talk about AI, 
-            or just say hi — my inbox is always open.
+            {t('contact.subtitle')}
           </p>
         </FadeIn>
 
