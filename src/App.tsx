@@ -3,6 +3,8 @@ import { Menu, X, Gamepad2, Terminal, Keyboard } from 'lucide-react'
 import { Hero, About, Experience, Projects, Blog, Testimonials, Contact } from './components/Sections'
 import { Cursor } from './components/Cursor'
 import { ThemeToggle } from './components/ThemeToggle'
+import { LanguageToggle } from './components/LanguageToggle'
+import { LanguageProvider, useLanguage } from './hooks/useLanguage'
 
 // Lazy load heavy components
 const Avatar3D = lazy(() => import('./components/Avatar3D').then(m => ({ default: m.Avatar3D })))
@@ -24,15 +26,16 @@ function Avatar3DFallback() {
   )
 }
 
-// Navigation links data
+// Navigation links with translation keys
 const navLinks = [
-  { href: '#about', label: 'About' },
-  { href: '#experience', label: 'Experience' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#contact', label: 'Contact' },
+  { href: '#about', key: 'nav.about' },
+  { href: '#experience', key: 'nav.experience' },
+  { href: '#projects', key: 'nav.projects' },
+  { href: '#contact', key: 'nav.contact' },
 ]
 
-function App() {
+function AppContent() {
+  const { t } = useLanguage()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [showGame, setShowGame] = useState(false)
   const [showTerminal, setShowTerminal] = useState(false)
@@ -152,14 +155,16 @@ function App() {
           <div className="hidden md:flex items-center gap-8 text-sm font-medium">
             {navLinks.map(link => (
               <a key={link.href} href={link.href} className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors">
-                {link.label}
+                {t(link.key)}
               </a>
             ))}
+            <LanguageToggle />
             <ThemeToggle />
           </div>
 
-          {/* Mobile: Theme + Menu */}
+          {/* Mobile: Language + Theme + Menu */}
           <div className="md:hidden flex items-center gap-2">
+            <LanguageToggle />
             <ThemeToggle />
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -186,7 +191,7 @@ function App() {
                 onClick={closeMobileMenu}
                 className="text-2xl font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:gradient-text transition-all"
               >
-                {link.label}
+                {t(link.key)}
               </a>
             ))}
           </div>
@@ -214,6 +219,14 @@ function App() {
         <Contact />
       </main>
     </div>
+  )
+}
+
+function App() {
+  return (
+    <LanguageProvider>
+      <AppContent />
+    </LanguageProvider>
   )
 }
 
