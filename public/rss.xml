@@ -4,7 +4,7 @@
     <title>Amine Bouhlal - Writing</title>
     <description>Thoughts on AI, engineering, startups, and the occasional surf trip.</description>
     <link>https://aminebouhlal.com</link>
-    <atom:link href="https://aminebouhlal.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <atom:link href="https://aminebouhlal.com/rss.xml" rel="self" type="application/rss+xml"/>
     <language>en-us</language>
     <lastBuildDate>Mon, 10 Feb 2026 12:00:00 GMT</lastBuildDate>
     <managingEditor>contact@aminebouhlal.com (Amine Bouhlal)</managingEditor>
