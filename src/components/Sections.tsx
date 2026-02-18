@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { Github, Linkedin, Twitter, Mail, ExternalLink, Code2, Rocket, Brain, Calendar, ArrowUpRight } from 'lucide-react'
 import { useInView } from '../hooks/useInView'
 import { useLanguage } from '../hooks/useLanguage'
+import { blogPosts, type BlogPost } from '../data/blogPosts'
+import { BlogPostModal } from './BlogPostModal'
 
 // Reusable animated wrapper component
 function FadeIn({ 
@@ -462,89 +464,68 @@ function ProjectCard({
   )
 }
 
-// Blog posts data
-const blogPosts = [
-  {
-    title: "Building AI Agents That Actually Work in Production",
-    excerpt: "Lessons learned from deploying multi-agent systems at enterprise scale. Spoiler: it's not about the model.",
-    date: "2026-02-10",
-    readTime: "8 min",
-    tags: ["AI", "Agents", "Production"],
-    link: "#", // TODO: Link to actual post
-  },
-  {
-    title: "From Architect to Developer: A Career Pivot Story",
-    excerpt: "How my background in architecture shaped my approach to software design and why I don't regret the switch.",
-    date: "2026-01-15",
-    readTime: "6 min",
-    tags: ["Career", "Architecture", "Personal"],
-    link: "#",
-  },
-  {
-    title: "Why Morocco Needs a Padel Tech Revolution",
-    excerpt: "The story behind X3 and how we're using technology to grow the sport we love.",
-    date: "2025-12-20",
-    readTime: "5 min",
-    tags: ["Startups", "Padel", "X3"],
-    link: "#",
-  },
-]
-
 export function Blog() {
   const { t } = useLanguage()
+  const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null)
   
   return (
-    <section id="blog" className="py-32 px-6">
-      <div className="max-w-5xl mx-auto">
-        <GlowLine />
-        
-        <FadeIn>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            <span className="text-[var(--text-muted)]">04.</span> {t('blog.title')}
-          </h2>
-        </FadeIn>
-        
-        <FadeIn delay={100}>
-          <p className="text-lg text-[var(--text-secondary)] mb-12 max-w-2xl">
-            {t('blog.subtitle')}
-          </p>
-        </FadeIn>
-        
-        <div className="grid md:grid-cols-3 gap-6">
-          {blogPosts.map((post, i) => (
-            <FadeIn key={i} delay={150 + i * 100}>
-              <BlogPostCard {...post} />
-            </FadeIn>
-          ))}
-        </div>
-        
-        <FadeIn delay={500}>
-          <div className="mt-12 text-center">
-            <span className="text-[var(--text-muted)] text-sm font-mono">
-              {t('blog.more')}
-            </span>
+    <>
+      {/* Blog Post Modal */}
+      {selectedPost && (
+        <BlogPostModal 
+          post={selectedPost} 
+          onClose={() => setSelectedPost(null)} 
+        />
+      )}
+      
+      <section id="blog" className="py-32 px-6">
+        <div className="max-w-5xl mx-auto">
+          <GlowLine />
+          
+          <FadeIn>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              <span className="text-[var(--text-muted)]">04.</span> {t('blog.title')}
+            </h2>
+          </FadeIn>
+          
+          <FadeIn delay={100}>
+            <p className="text-lg text-[var(--text-secondary)] mb-12 max-w-2xl">
+              {t('blog.subtitle')}
+            </p>
+          </FadeIn>
+          
+          <div className="grid md:grid-cols-3 gap-6">
+            {blogPosts.map((post, i) => (
+              <FadeIn key={post.slug} delay={150 + i * 100}>
+                <BlogPostCard 
+                  post={post}
+                  onClick={() => setSelectedPost(post)}
+                />
+              </FadeIn>
+            ))}
           </div>
-        </FadeIn>
-      </div>
-    </section>
+          
+          <FadeIn delay={500}>
+            <div className="mt-12 text-center">
+              <span className="text-[var(--text-muted)] text-sm font-mono">
+                {t('blog.more')}
+              </span>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+    </>
   )
 }
 
 function BlogPostCard({ 
-  title, 
-  excerpt, 
-  date, 
-  readTime, 
-  tags, 
-  link 
+  post,
+  onClick
 }: { 
-  title: string
-  excerpt: string
-  date: string
-  readTime: string
-  tags: string[]
-  link: string
+  post: BlogPost
+  onClick: () => void
 }) {
+  const { title, excerpt, date, readTime, tags } = post
   const formattedDate = new Date(date).toLocaleDateString('en-US', { 
     month: 'short', 
     day: 'numeric',
@@ -552,9 +533,9 @@ function BlogPostCard({
   })
   
   return (
-    <a 
-      href={link}
-      className="glass rounded-2xl p-6 h-full flex flex-col hover:bg-white/5 hover:border-accent/20 hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300 group block"
+    <button 
+      onClick={onClick}
+      className="glass rounded-2xl p-6 h-full flex flex-col hover:bg-white/5 hover:border-accent/20 hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300 group text-left w-full cursor-pointer"
     >
       {/* Tags */}
       <div className="flex flex-wrap gap-2 mb-4">
@@ -587,7 +568,7 @@ function BlogPostCard({
         </span>
         <span>{readTime} read</span>
       </div>
-    </a>
+    </button>
   )
 }
 
